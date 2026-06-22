@@ -4,7 +4,14 @@ import com.devicemgmt.common.constants.Actions;
 import com.devicemgmt.common.dto.Request;
 import com.devicemgmt.common.dto.Response;
 import com.devicemgmt.server.security.TokenManager;
-import com.devicemgmt.server.service.*;
+import com.devicemgmt.server.service.ApprovalService;
+import com.devicemgmt.server.service.AssignmentService;
+import com.devicemgmt.server.service.AuthService;
+import com.devicemgmt.server.service.CategoryService;
+import com.devicemgmt.server.service.DashboardService;
+import com.devicemgmt.server.service.DeviceService;
+import com.devicemgmt.server.service.LocationService;
+import com.devicemgmt.server.service.UserService;
 
 public class RequestRouter {
     private final AuthService authService = new AuthService();
@@ -19,10 +26,10 @@ public class RequestRouter {
     public Response route(Request req) {
         if (req == null || req.getAction() == null) return Response.error("Invalid request");
 
-        // Public actions (no auth required)
+        
         if (Actions.LOGIN.equals(req.getAction())) return authService.login(req);
 
-        // All other actions require valid token
+       
         if (!TokenManager.getInstance().isValid(req.getToken())) {
             return Response.error("Phiên đăng nhập không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.");
         }

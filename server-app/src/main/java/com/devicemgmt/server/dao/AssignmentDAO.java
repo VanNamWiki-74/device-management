@@ -83,9 +83,18 @@ public class AssignmentDAO {
 
     public int insert(AssignmentDTO a) {
         String sql = """
-            INSERT INTO assignments (device_id, user_id, assigned_to, department, assigned_by,
-                assigned_date, expected_return, status, notes)
-            VALUES (?, ?, ?, ?, ?, ?, 'ACTIVE', ?)
+            INSERT INTO assignments (
+                device_id,
+                user_id,
+                assigned_to,
+                department,
+                assigned_by,
+                assigned_date,
+                expected_return,
+                status,
+                notes
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVE', ?)
             RETURNING id
             """;
         Connection conn = null;

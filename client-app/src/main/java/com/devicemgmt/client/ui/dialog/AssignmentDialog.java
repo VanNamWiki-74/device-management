@@ -1,5 +1,8 @@
 package com.devicemgmt.client.ui.dialog;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.devicemgmt.client.service.ClientService;
 import com.devicemgmt.client.ui.Styles;
 import com.devicemgmt.client.ui.UIHelper;
@@ -8,13 +11,19 @@ import com.devicemgmt.common.dto.AssignmentDTO;
 import com.devicemgmt.common.dto.DeviceDTO;
 import com.devicemgmt.common.dto.Response;
 import com.devicemgmt.common.dto.UserDTO;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.util.List;
+import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class AssignmentDialog {
 
@@ -25,7 +34,7 @@ public class AssignmentDialog {
     public static AssignmentDTO show(ClientService svc, Stage owner, ApprovalDTO prefillFrom) {
         List<DeviceDTO> devices = svc.getDeviceList(null, "AVAILABLE", 1, 200);
 
-        // Yêu cầu "Cấp mới" không có thiết bị cụ thể, chỉ có danh mục mong muốn -> lọc theo danh mục
+        
         if (prefillFrom != null && prefillFrom.getDeviceId() <= 0 && prefillFrom.getCategoryId() > 0) {
             List<DeviceDTO> matched = devices.stream()
                 .filter(d -> d.getCategoryId() == prefillFrom.getCategoryId())
