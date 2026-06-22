@@ -204,13 +204,11 @@ INSERT INTO devices (code, name, category_id, location_id, brand, model, serial_
 ('HDD-001','SSD Samsung 1TB',         6, 8, 'Samsung', '870 EVO 1TB',  'SAM870-001',      'AVAILABLE', '2023-10-01', '2026-10-01', 2800000)
 ON CONFLICT (code) DO NOTHING;
 
--- Sample assignments
+-- Sample assignments (chỉ dùng user_id đã tồn tại trong bảng users: 1=admin, 2=user1)
 INSERT INTO assignments (device_id, user_id, assigned_to, department, assigned_by, assigned_date, status, notes) VALUES
-(1, 2, 'IT', 1, '2023-01-20', 'ACTIVE', 'Cấp cho nhân viên IT'),
-(2, 3, 'Ban Giám đốc', 1, '2022-06-05', 'ACTIVE', 'Văn phòng giám đốc'),
-(3, 4, 'IT', 1, '2023-03-15', 'ACTIVE', NULL),
-(5, 5, 'Kế toán', 1, '2022-09-10', 'ACTIVE', 'Máy tính kế toán trưởng'),
-(6, 6, 'Nhân sự', 1, '2023-02-05', 'ACTIVE', NULL)
+(1, 2, 'Nguyễn Văn A', 'IT', 1, '2023-01-20', 'ACTIVE', 'Cấp cho nhân viên IT'),
+(2, 1, 'Quản trị viên', 'Ban Giám đốc', 1, '2022-06-05', 'ACTIVE', 'Văn phòng giám đốc'),
+(3, 2, 'Nguyễn Văn A', 'IT', 1, '2023-03-15', 'ACTIVE', NULL)
 ON CONFLICT DO NOTHING;
 
 --sample approval status

@@ -11,7 +11,10 @@ import com.devicemgmt.common.dto.DeviceDTO;
 import com.devicemgmt.common.dto.Response;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.util.Duration;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,6 +35,7 @@ public class ApprovalPanel extends VBox {
     private int currentPage = 1;
     private int totalPages = 1;
     private final int PAGE_SIZE = 20;
+    private Timeline autoRefresh;
 
     public ApprovalPanel(ClientService svc) {
         this.svc = svc;
@@ -87,6 +91,15 @@ public class ApprovalPanel extends VBox {
 
         getChildren().addAll(titleRow, toolbar, table, pagination);
         loadData();
+
+        // Không có cơ chế push từ server (TCP request/response thuần) nên tự làm mới định kỳ
+        // để giảm việc phải bấm tay khi có thay đổi từ phía khác (admin/user khác xử lý yêu cầu).
+        autoRefresh = new Timeline(new KeyFrame(Duration.seconds(15), e -> loadData()));
+        autoRefresh.setCycleCount(Timeline.INDEFINITE);
+        autoRefresh.play();
+        sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene == null) autoRefresh.stop();
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -153,9 +166,15 @@ public class ApprovalPanel extends VBox {
                     approveBtn.setOnAction(e -> {
                         ApprovalDTO a = getTableView().getItems().get(getIndex());
                         Response resp = svc.processApproval(a.getId(), "APPROVED", null);
-                        UIHelper.showAlert(resp.isSuccess() ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
-                            resp.isSuccess() ? "Thành công" : "Lỗi", resp.getMessage());
-                        if (resp.isSuccess()) loadData();
+                        if (resp.isSuccess()) {
+                            // Cập nhật tại chỗ, không gọi lại loadData() ngay để tránh dòng vừa duyệt
+                            // bị lọc mất khỏi danh sách (filter mặc định là PENDING) trước khi admin
+                            // kịp bấm Import/Cập nhật trạng thái.
+                            a.setStatus("APPROVED");
+                            getTableView().refresh();
+                        } else {
+                            UIHelper.showAlert(Alert.AlertType.ERROR, "Lỗi", resp.getMessage());
+                        }
                     });
 
                     rejectBtn.setOnAction(e -> {
@@ -167,9 +186,13 @@ public class ApprovalPanel extends VBox {
                         Optional<String> reason = dlg.showAndWait();
                         if (reason.isPresent()) {
                             Response resp = svc.processApproval(a.getId(), "REJECTED", reason.get());
-                            UIHelper.showAlert(resp.isSuccess() ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
-                                resp.isSuccess() ? "Thành công" : "Lỗi", resp.getMessage());
-                            if (resp.isSuccess()) loadData();
+                            if (resp.isSuccess()) {
+                                a.setStatus("REJECTED");
+                                a.setComments(reason.get());
+                                getTableView().refresh();
+                            } else {
+                                UIHelper.showAlert(Alert.AlertType.ERROR, "Lỗi", resp.getMessage());
+                            }
                         }
                     });
 
@@ -180,7 +203,8 @@ public class ApprovalPanel extends VBox {
                             AssignmentDTO result = AssignmentDialog.show(svc, (Stage) getScene().getWindow(), a);
                             if (result != null) {
                                 svc.markApprovalImported(a.getId());
-                                loadData();
+                                a.setImported(true);
+                                getTableView().refresh();
                             }
                         } else {
                             // Sửa chữa/Thanh lý: thiết bị đang IN_USE của user, không "phân công" lại
@@ -201,7 +225,8 @@ public class ApprovalPanel extends VBox {
                             Response resp = svc.updateDevice(device);
                             if (resp.isSuccess()) {
                                 svc.markApprovalImported(a.getId());
-                                loadData();
+                                a.setImported(true);
+                                getTableView().refresh();
                             } else {
                                 UIHelper.showAlert(Alert.AlertType.ERROR, "Lỗi", resp.getMessage());
                             }
