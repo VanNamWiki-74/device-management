@@ -149,8 +149,8 @@ INSERT INTO user_roles (name, description) VALUES
 
 -- Default admin user (password: Admin@123)
 INSERT INTO users (username, password_hash, full_name, email, role_id, manager_id) VALUES
-('admin', '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.PTE3Wi', 'Quản trị viên', 'admin@company.com', 1, NULL),
-('user1', '$2a$12$eImiTXuWVxfM37uY4JANjQ4nrM61F8OiELOdBmFaBFvh1f5WqAC1a', 'Nguyễn Văn A', 'nguyenvana@company.com', 2, 1)
+('admin', '$2a$12$cISauHUWwShuJx8GKQ/IlOn2DP0mhE0zCPXnFNnGxH.doMj3VwXpy', 'Quản trị viên', 'admin@company.com', 1, NULL),
+('user1', '$2a$12$dUAGFXybE/A.wEkDJ8D0yem/xO71yOqNwAumycS6r2yCgdWCUYcM6', 'Nguyễn Văn A', 'nguyenvana@company.com', 2, 1)
 ON CONFLICT (username) DO NOTHING;
 
 -- Device categories

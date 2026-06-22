@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +23,6 @@ public class ServerMain {
         int port = AppConfig.getServerPort();
         int maxClients = AppConfig.getMaxClients();
         int threadPoolSize = AppConfig.getThreadPoolSize();
-
-        System.out.println(BCrypt.hashpw("Admin@123", BCrypt.gensalt(12)));
-        System.out.println(BCrypt.hashpw("123456", BCrypt.gensalt(12)));
-
-        log.info(BCrypt.hashpw("Admin@123", BCrypt.gensalt(12)));
-        log.info(BCrypt.hashpw("123456", BCrypt.gensalt(12)));
 
         log.info("=================================================");
         log.info("  Device Management Server");
