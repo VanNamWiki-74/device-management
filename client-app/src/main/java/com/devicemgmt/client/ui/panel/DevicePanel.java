@@ -3,6 +3,7 @@ package com.devicemgmt.client.ui.panel;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -270,7 +271,7 @@ public class DevicePanel extends VBox {
         if (file == null) return;
 
         try {
-            String csv = Files.readString(file.toPath());
+            String csv = Files.readString(file.toPath(),  Charset.forName("windows-1258"));
             new Thread(() -> {
                 Response resp = svc.importDevices(csv);
                 Platform.runLater(() -> {
