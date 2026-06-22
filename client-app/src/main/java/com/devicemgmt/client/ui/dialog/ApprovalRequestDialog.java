@@ -109,7 +109,12 @@ public class ApprovalRequestDialog {
             UIHelper.formRow("Mô tả / lý do *", descField),
             errLbl);
         content.setPadding(new Insets(20));
-        dialog.getDialogPane().setContent(content);
+
+        ScrollPane scrollPane = new ScrollPane(content);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefViewportHeight(420);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        dialog.getDialogPane().setContent(scrollPane);
 
         Button okBtn = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
         okBtn.setText("Gửi yêu cầu");
