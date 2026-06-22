@@ -1,0 +1,25 @@
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain | =================================================
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain |   Device Management Server
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain |   Port        : 9000
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain |   Max Clients : 50
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain |   Thread Pool : 20
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain |   DB URL      : jdbc:postgresql://localhost:5432/device_management
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain | =================================================
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-17 18:02:47 | INFO  | c.d.server.db.ConnectionManager | Connection pool initialized with 0 connections
+2026-06-17 18:02:47 | INFO  | com.devicemgmt.server.ServerMain | Database connection pool initialized successfully.
+2026-06-17 18:02:48 | INFO  | com.devicemgmt.server.ServerMain | Server is listening on port 9000
+2026-06-17 18:03:12 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:63626
+2026-06-17 18:08:51 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:57130
+2026-06-17 18:10:17 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:52900
+2026-06-17 18:11:09 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:61020
+2026-06-17 18:11:45 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:49797

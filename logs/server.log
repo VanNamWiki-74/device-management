@@ -1,0 +1,27 @@
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | $2a$12$w.0P7lOO9llwclGDa9aGi.lhqjHDGl9YjJebULPUUTZ9iNBfF9QHS
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | $2a$12$3CrUzgH9Q1lyfRIxt/qP6eyv.SZmuvtiEitqphOQ/LrNO3PwtvU26
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | =================================================
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain |   Device Management Server
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain |   Port        : 9000
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain |   Max Clients : 50
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain |   Thread Pool : 20
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain |   DB URL      : jdbc:postgresql://localhost:5432/device_management
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | =================================================
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | ERROR | c.d.server.db.ConnectionManager | Failed to create connection for pool: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:09 | INFO  | c.d.server.db.ConnectionManager | Connection pool initialized with 0 connections
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | Database connection pool initialized successfully.
+2026-06-22 14:02:09 | INFO  | com.devicemgmt.server.ServerMain | Server is listening on port 9000
+2026-06-22 14:02:28 | INFO  | com.devicemgmt.server.ClientHandler | Client connected: /127.0.0.1:60484
+2026-06-22 14:02:36 | ERROR | com.devicemgmt.server.dao.UserDAO | isLocked error: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:02:36 | ERROR | com.devicemgmt.server.dao.UserDAO | findByUsername error: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-06-22 14:04:42 | INFO  | com.devicemgmt.server.ServerMain | Server shutting down...
+2026-06-22 14:04:42 | INFO  | c.d.server.db.ConnectionManager | Connection pool shut down

@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: devmgmt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: device_management
+      POSTGRES_USER: devmgmt
+      POSTGRES_PASSWORD: devmgmt@123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devmgmt -d device_management"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: devmgmt-server
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: device_management
+      DB_USER: devmgmt
+      DB_PASSWORD: devmgmt@123
+      SERVER_PORT: 9000
+      SERVER_MAX_CLIENTS: 50
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - server-logs:/app/logs
+
+volumes:
+  pgdata:
+  server-logs:

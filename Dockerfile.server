@@ -1,0 +1,27 @@
+FROM maven:3.9-eclipse-temurin-17-alpine AS builder
+WORKDIR /app
+
+
+COPY pom.xml .
+
+
+COPY common/pom.xml common/
+COPY server-app/pom.xml server-app/
+COPY client-app/pom.xml client-app/
+
+RUN mvn dependency:go-offline -pl common,server-app -B 2>/dev/null || true
+
+
+COPY common/src common/src
+COPY server-app/src server-app/src
+
+RUN mvn -pl common,server-app package -DskipTests -B
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+RUN mkdir -p /app/logs
+
+COPY --from=builder /app/server-app/target/server-app-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
+
+EXPOSE 9000
+ENTRYPOINT ["java", "-jar", "app.jar"]
