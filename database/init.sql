@@ -146,6 +146,7 @@ INSERT INTO user_roles (name, description) VALUES
 ('MANAGER', 'Manager with elevated access'),
 ('IT-STAFF', 'IT staff with technical access'),
 ('USER',  'Regular user with limited access')
+ON CONFLICT (name) DO NOTHING;
 
 -- Default admin user (password: Admin@123)
 INSERT INTO users (username, password_hash, full_name, email, role_id, manager_id) VALUES
