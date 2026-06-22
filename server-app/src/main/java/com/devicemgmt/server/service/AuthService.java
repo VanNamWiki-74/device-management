@@ -18,8 +18,6 @@ public class AuthService {
         String username = req.getData().get("username").getAsString();
         String password = req.getData().get("password").getAsString();
 
-        System.out.println("Login attempt: username=" + username);
-        System.out.println("Password provided: " + (password != null && !password.isEmpty()));
         if (userDAO.isLocked(username)) {
             logDAO.insert(username, "LOGIN", null, null, null, "FAILED", "Account locked");
             return Response.error("Tài khoản bị khóa tạm thời do đăng nhập sai nhiều lần. Vui lòng thử lại sau.");
@@ -35,8 +33,6 @@ public class AuthService {
         }
 
         String hash = userDAO.getPasswordHash(username);
-        System.out.println("Password hash from DB: " + PasswordUtils.verify(password, hash));
-        System.out.println("Expected hash: " + hash);
         if (!PasswordUtils.verify(password, hash)) {
             userDAO.incrementFailedLogin(username);
             logDAO.insert(username, "LOGIN", null, null, null, "FAILED", "Wrong password");

@@ -13,8 +13,14 @@ import java.util.List;
 public class UserDAO {
     private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
 
+    private static final String SELECT_FULL = """
+        SELECT u.*, r.name AS role
+        FROM users u
+        LEFT JOIN user_roles r ON u.role_id = r.id
+        """;
+
     public UserDTO findByUsername(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
+        String sql = SELECT_FULL + " WHERE u.username = ?";
         Connection conn = null;
         try {
             conn = ConnectionManager.getInstance().getConnection();
@@ -48,10 +54,9 @@ public class UserDAO {
     }
 
     public List<UserDTO> findAll(String keyword, int page, int pageSize) {
-        String sql = """
-            SELECT * FROM users
-            WHERE (? IS NULL OR username ILIKE ? OR full_name ILIKE ?)
-            ORDER BY id
+        String sql = SELECT_FULL + """
+            WHERE (? IS NULL OR u.username ILIKE ? OR u.full_name ILIKE ?)
+            ORDER BY u.id
             LIMIT ? OFFSET ?
             """;
         List<UserDTO> list = new ArrayList<>();
@@ -95,8 +100,8 @@ public class UserDAO {
 
     public boolean insert(UserDTO u, String passwordHash) {
         String sql = """
-            INSERT INTO users (username, password_hash, full_name, email, phone, role, is_active)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO users (username, password_hash, full_name, email, phone, role_id, is_active)
+            VALUES (?, ?, ?, ?, ?, (SELECT id FROM user_roles WHERE name = ?), ?)
             """;
         Connection conn = null;
         try {
@@ -120,7 +125,7 @@ public class UserDAO {
 
     public boolean update(UserDTO u) {
         String sql = """
-            UPDATE users SET full_name=?, email=?, phone=?, role=?, is_active=?, updated_at=NOW()
+            UPDATE users SET full_name=?, email=?, phone=?, role_id=(SELECT id FROM user_roles WHERE name=?), is_active=?, updated_at=NOW()
             WHERE id=?
             """;
         Connection conn = null;
@@ -163,7 +168,8 @@ public class UserDAO {
         Connection conn = null;
         try {
             conn = ConnectionManager.getInstance().getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHERE id=? AND role != 'ADMIN'");
+            PreparedStatement ps = conn.prepareStatement(
+                "DELETE FROM users WHERE id=? AND role_id != (SELECT id FROM user_roles WHERE name='ADMIN')");
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

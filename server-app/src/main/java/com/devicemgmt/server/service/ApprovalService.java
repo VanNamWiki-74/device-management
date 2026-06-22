@@ -38,8 +38,11 @@ public class ApprovalService {
         int userId = TokenManager.getInstance().getUserId(req.getToken());
         a.setRequesterId(userId);
 
-        // SỬA CHỮA (2) và THANH LÝ (3) phải chọn thiết bị đang được chính user này sử dụng
-        if (a.getApprovalTypeId() == 2 || a.getApprovalTypeId() == 3) {
+        // SỬA CHỮA và THANH LÝ phải chọn thiết bị đang được chính user này sử dụng
+        String typeName = dao.findTypeName(a.getApprovalTypeId());
+        if (typeName == null) return Response.error("Loại yêu cầu không hợp lệ.");
+        boolean needsDevice = "SỬA CHỮA".equals(typeName) || "THANH LÝ".equals(typeName);
+        if (needsDevice) {
             if (a.getDeviceId() <= 0) return Response.error("Vui lòng chọn thiết bị cần sửa chữa/thanh lý.");
             if (!assignmentDAO.isActiveAssignment(a.getDeviceId(), userId)) {
                 return Response.error("Bạn chỉ có thể gửi yêu cầu cho thiết bị đang được cấp cho mình.");

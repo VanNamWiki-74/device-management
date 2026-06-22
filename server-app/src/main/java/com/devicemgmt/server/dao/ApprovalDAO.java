@@ -181,6 +181,22 @@ public class ApprovalDAO {
         return list;
     }
 
+    public String findTypeName(int typeId) {
+        Connection conn = null;
+        try {
+            conn = ConnectionManager.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT name FROM approvals_types WHERE id = ?");
+            ps.setInt(1, typeId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getString("name");
+        } catch (SQLException e) {
+            log.error("findTypeName error: {}", e.getMessage());
+        } finally {
+            ConnectionManager.getInstance().releaseConnection(conn);
+        }
+        return null;
+    }
+
     private ApprovalDTO mapRow(ResultSet rs) throws SQLException {
         ApprovalDTO a = new ApprovalDTO();
         a.setId(rs.getInt("id"));
