@@ -13,10 +13,11 @@ public class ApprovalDAO {
     private static final Logger log = LoggerFactory.getLogger(ApprovalDAO.class);
 
     private static final String SELECT_FULL = """
-        SELECT a.*, d.code AS device_code, d.name AS device_name,
+        SELECT a.*, d.code AS device_code, d.name AS device_name, cat.name AS category_name,
                t.name AS type_name, ru.full_name AS requester_name, au.full_name AS approver_name
         FROM approvals a
         LEFT JOIN devices d ON a.device_id = d.id
+        LEFT JOIN device_categories cat ON a.category_id = cat.id
         LEFT JOIN approvals_types t ON a.approval_type = t.id
         LEFT JOIN users ru ON a.requester_id = ru.id
         LEFT JOIN users au ON a.approver_id = au.id
@@ -100,8 +101,8 @@ public class ApprovalDAO {
 
     public int insert(ApprovalDTO a) {
         String sql = """
-            INSERT INTO approvals (requester_id, device_id, approval_type, description, status)
-            VALUES (?, ?, ?, ?, 'PENDING')
+            INSERT INTO approvals (requester_id, device_id, category_id, approval_type, description, status)
+            VALUES (?, ?, ?, ?, ?, 'PENDING')
             RETURNING id
             """;
         Connection conn = null;
@@ -111,8 +112,10 @@ public class ApprovalDAO {
             ps.setInt(1, a.getRequesterId());
             if (a.getDeviceId() > 0) ps.setInt(2, a.getDeviceId());
             else ps.setNull(2, Types.INTEGER);
-            ps.setInt(3, a.getApprovalTypeId());
-            ps.setString(4, a.getDescription());
+            if (a.getCategoryId() > 0) ps.setInt(3, a.getCategoryId());
+            else ps.setNull(3, Types.INTEGER);
+            ps.setInt(4, a.getApprovalTypeId());
+            ps.setString(5, a.getDescription());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt(1);
         } catch (SQLException e) {
@@ -205,6 +208,8 @@ public class ApprovalDAO {
         a.setDeviceId(rs.getInt("device_id"));
         a.setDeviceCode(rs.getString("device_code"));
         a.setDeviceName(rs.getString("device_name"));
+        a.setCategoryId(rs.getInt("category_id"));
+        a.setCategoryName(rs.getString("category_name"));
         a.setApprovalTypeId(rs.getInt("approval_type"));
         a.setApprovalTypeName(rs.getString("type_name"));
         a.setDescription(rs.getString("description"));

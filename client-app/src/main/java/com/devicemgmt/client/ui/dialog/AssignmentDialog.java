@@ -23,6 +23,22 @@ public class AssignmentDialog {
     }
 
     public static AssignmentDTO show(ClientService svc, Stage owner, ApprovalDTO prefillFrom) {
+        List<DeviceDTO> devices = svc.getDeviceList(null, "AVAILABLE", 1, 200);
+
+        // Yêu cầu "Cấp mới" không có thiết bị cụ thể, chỉ có danh mục mong muốn -> lọc theo danh mục
+        if (prefillFrom != null && prefillFrom.getDeviceId() <= 0 && prefillFrom.getCategoryId() > 0) {
+            List<DeviceDTO> matched = devices.stream()
+                .filter(d -> d.getCategoryId() == prefillFrom.getCategoryId())
+                .toList();
+            if (matched.isEmpty()) {
+                UIHelper.showAlert(Alert.AlertType.WARNING, "Chưa có thiết bị phù hợp",
+                    "Không có thiết bị nào thuộc danh mục \"" + prefillFrom.getCategoryName() +
+                    "\" đang sẵn (AVAILABLE).\nVui lòng thêm thiết bị mới thuộc danh mục này ở màn \"Thiết bị\" trước khi phân công.");
+                return null;
+            }
+            devices = matched;
+        }
+
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Phân công thiết bị");
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -33,8 +49,6 @@ public class AssignmentDialog {
         deviceBox.setStyle(Styles.COMBO_BOX);
         deviceBox.setPrefWidth(Double.MAX_VALUE);
         deviceBox.setPromptText("Chọn thiết bị (chỉ AVAILABLE)");
-
-        List<DeviceDTO> devices = svc.getDeviceList(null, "AVAILABLE", 1, 200);
         deviceBox.getItems().addAll(devices);
         deviceBox.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -75,8 +89,12 @@ public class AssignmentDialog {
         });
 
         if (prefillFrom != null) {
-            for (DeviceDTO d : devices) {
-                if (d.getId() == prefillFrom.getDeviceId()) { deviceBox.setValue(d); break; }
+            if (prefillFrom.getDeviceId() > 0) {
+                for (DeviceDTO d : devices) {
+                    if (d.getId() == prefillFrom.getDeviceId()) { deviceBox.setValue(d); break; }
+                }
+            } else if (devices.size() == 1) {
+                deviceBox.setValue(devices.get(0));
             }
             for (UserDTO u : users) {
                 if (u.getId() == prefillFrom.getRequesterId()) {

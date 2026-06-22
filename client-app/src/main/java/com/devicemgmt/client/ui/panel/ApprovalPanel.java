@@ -7,6 +7,7 @@ import com.devicemgmt.client.ui.dialog.ApprovalRequestDialog;
 import com.devicemgmt.client.ui.dialog.AssignmentDialog;
 import com.devicemgmt.common.dto.ApprovalDTO;
 import com.devicemgmt.common.dto.AssignmentDTO;
+import com.devicemgmt.common.dto.DeviceDTO;
 import com.devicemgmt.common.dto.Response;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -94,9 +95,13 @@ public class ApprovalPanel extends VBox {
         colType.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getApprovalTypeName()));
         colType.setPrefWidth(110);
 
-        TableColumn<ApprovalDTO, String> colDevice = new TableColumn<>("Thiết bị");
-        colDevice.setCellValueFactory(c -> new SimpleStringProperty(
-            c.getValue().getDeviceCode() != null ? "[" + c.getValue().getDeviceCode() + "] " + c.getValue().getDeviceName() : ""));
+        TableColumn<ApprovalDTO, String> colDevice = new TableColumn<>("Thiết bị / Danh mục");
+        colDevice.setCellValueFactory(c -> {
+            ApprovalDTO a = c.getValue();
+            if (a.getDeviceCode() != null) return new SimpleStringProperty("[" + a.getDeviceCode() + "] " + a.getDeviceName());
+            if (a.getCategoryName() != null) return new SimpleStringProperty("Danh mục: " + a.getCategoryName());
+            return new SimpleStringProperty("");
+        });
         colDevice.setPrefWidth(180);
 
         TableColumn<ApprovalDTO, String> colDesc = new TableColumn<>("Mô tả / lý do");
@@ -170,10 +175,36 @@ public class ApprovalPanel extends VBox {
 
                     importBtn.setOnAction(e -> {
                         ApprovalDTO a = getTableView().getItems().get(getIndex());
-                        AssignmentDTO result = AssignmentDialog.show(svc, (Stage) getScene().getWindow(), a);
-                        if (result != null) {
-                            svc.markApprovalImported(a.getId());
-                            loadData();
+                        if ("CẤP MỚI".equals(a.getApprovalTypeName())) {
+                            // Cấp mới: chưa có thiết bị cụ thể -> mở Phân công, tự lọc thiết bị AVAILABLE theo danh mục
+                            AssignmentDTO result = AssignmentDialog.show(svc, (Stage) getScene().getWindow(), a);
+                            if (result != null) {
+                                svc.markApprovalImported(a.getId());
+                                loadData();
+                            }
+                        } else {
+                            // Sửa chữa/Thanh lý: thiết bị đang IN_USE của user, không "phân công" lại
+                            // mà cập nhật trực tiếp trạng thái thiết bị
+                            String newStatus = "SỬA CHỮA".equals(a.getApprovalTypeName()) ? "MAINTENANCE" : "DISPOSED";
+                            String statusLabel = "MAINTENANCE".equals(newStatus) ? "Đang bảo trì" : "Đã thanh lý";
+                            List<DeviceDTO> found = svc.getDeviceList(a.getDeviceCode(), null, 1, 5);
+                            DeviceDTO device = found.stream().filter(d -> d.getId() == a.getDeviceId()).findFirst().orElse(null);
+                            if (device == null) {
+                                UIHelper.showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thiết bị tương ứng.");
+                                return;
+                            }
+                            if (!UIHelper.showConfirm("Xác nhận",
+                                "Cập nhật trạng thái thiết bị [" + device.getCode() + "] " + device.getName() + " thành \"" + statusLabel + "\"?")) {
+                                return;
+                            }
+                            device.setStatus(newStatus);
+                            Response resp = svc.updateDevice(device);
+                            if (resp.isSuccess()) {
+                                svc.markApprovalImported(a.getId());
+                                loadData();
+                            } else {
+                                UIHelper.showAlert(Alert.AlertType.ERROR, "Lỗi", resp.getMessage());
+                            }
                         }
                     });
                 }
@@ -184,6 +215,7 @@ public class ApprovalPanel extends VBox {
                     ApprovalDTO a = getTableView().getItems().get(getIndex());
                     boolean pending = "PENDING".equals(a.getStatus());
                     boolean canImport = "APPROVED".equals(a.getStatus()) && !a.isImported();
+                    importBtn.setText("CẤP MỚI".equals(a.getApprovalTypeName()) ? "Import → Phân công" : "Cập nhật trạng thái TB");
                     approveBtn.setVisible(pending); approveBtn.setManaged(pending);
                     rejectBtn.setVisible(pending); rejectBtn.setManaged(pending);
                     importBtn.setVisible(canImport); importBtn.setManaged(canImport);

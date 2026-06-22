@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS approvals (
     id              SERIAL PRIMARY KEY,
     requester_id    INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     device_id       INT REFERENCES devices(id) ON DELETE SET NULL,
+    category_id     INT REFERENCES device_categories(id) ON DELETE SET NULL,
     approval_type   INT NOT NULL REFERENCES approvals_types(id),
     description     TEXT,
     status          VARCHAR(20) NOT NULL DEFAULT 'PENDING',
@@ -228,8 +229,8 @@ INSERT INTO approvals_types (name, description) VALUES
 ON CONFLICT (name) DO NOTHING;
 
 --Sample approvals
-INSERT INTO approvals (requester_id, device_id, approval_type, description, status, approver_id, comments, imported, approval_date) VALUES
-(2, NULL, 1, 'Đề xuất cấp thêm 1 màn hình mới cho nhân viên IT', 'APPROVED', 1, 'Đồng ý mua thiết bị mới', FALSE, NOW()),
-(2, 3, 2, 'Chuột bị liệt nút phải, cần sửa chữa', 'PENDING', NULL, NULL, FALSE, NULL),
-(2, 4, 3, 'Bàn phím hỏng nhiều phím, đề nghị thanh lý', 'REJECTED', 1, 'Không đồng ý thanh lý, đề nghị sửa chữa trước', FALSE, NOW())
+INSERT INTO approvals (requester_id, device_id, category_id, approval_type, description, status, approver_id, comments, imported, approval_date) VALUES
+(2, NULL, 1, 1, 'Đề xuất cấp thêm 1 màn hình mới cho nhân viên IT', 'APPROVED', 1, 'Đồng ý mua thiết bị mới', FALSE, NOW()),
+(2, 3, 2, 2, 'Chuột bị liệt nút phải, cần sửa chữa', 'PENDING', NULL, NULL, FALSE, NULL),
+(2, 4, 3, 3, 'Bàn phím hỏng nhiều phím, đề nghị thanh lý', 'REJECTED', 1, 'Không đồng ý thanh lý, đề nghị sửa chữa trước', FALSE, NOW())
 ON CONFLICT DO NOTHING;

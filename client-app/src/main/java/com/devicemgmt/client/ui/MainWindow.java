@@ -47,9 +47,6 @@ public class MainWindow {
         HBox header = buildHeader(user, stage);
         root.setTop(header);
 
-        // ---- Default panel ----
-        root.setCenter(new DashboardPanel(svc));
-
         Scene scene = new Scene(root, 1280, 780);
         stage.setScene(scene);
         stage.setTitle("Quản lý thiết bị văn phòng — " + user.getFullName());
@@ -135,6 +132,7 @@ public class MainWindow {
 
             if (first[0]) {
                 btn.setSelected(true);
+                root.setCenter(entry.getValue().get());
                 first[0] = false;
             }
         }

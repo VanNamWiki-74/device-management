@@ -193,10 +193,9 @@ public class DevicePanel extends VBox {
             });
             colActions.setPrefWidth(130);
             table.getColumns().addAll(colCode, colName, colCat, colLoc, colBrand, colModel, colStatus, colWarranty, colActions);
+        } else {
+            table.getColumns().addAll(colCode, colName, colCat, colLoc, colBrand, colModel);
         }
-        
-
-        table.getColumns().addAll(colCode, colName, colCat, colLoc, colBrand, colModel);
     }
 
     private HBox buildPagination() {

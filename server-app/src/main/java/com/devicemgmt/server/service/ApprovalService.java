@@ -3,8 +3,10 @@ package com.devicemgmt.server.service;
 import com.devicemgmt.common.dto.ApprovalDTO;
 import com.devicemgmt.common.dto.Request;
 import com.devicemgmt.common.dto.Response;
+import com.devicemgmt.common.dto.DeviceDTO;
 import com.devicemgmt.server.dao.ApprovalDAO;
 import com.devicemgmt.server.dao.AssignmentDAO;
+import com.devicemgmt.server.dao.DeviceDAO;
 import com.devicemgmt.server.dao.LogDAO;
 import com.devicemgmt.server.security.TokenManager;
 import com.google.gson.Gson;
@@ -12,6 +14,7 @@ import com.google.gson.Gson;
 public class ApprovalService {
     private final ApprovalDAO dao = new ApprovalDAO();
     private final AssignmentDAO assignmentDAO = new AssignmentDAO();
+    private final DeviceDAO deviceDAO = new DeviceDAO();
     private final LogDAO logDAO = new LogDAO();
     private final Gson gson = new Gson();
 
@@ -39,6 +42,7 @@ public class ApprovalService {
         a.setRequesterId(userId);
 
         // SỬA CHỮA và THANH LÝ phải chọn thiết bị đang được chính user này sử dụng
+        // CẤP MỚI phải chọn danh mục thiết bị mong muốn (chưa có thiết bị cụ thể)
         String typeName = dao.findTypeName(a.getApprovalTypeId());
         if (typeName == null) return Response.error("Loại yêu cầu không hợp lệ.");
         boolean needsDevice = "SỬA CHỮA".equals(typeName) || "THANH LÝ".equals(typeName);
@@ -47,8 +51,11 @@ public class ApprovalService {
             if (!assignmentDAO.isActiveAssignment(a.getDeviceId(), userId)) {
                 return Response.error("Bạn chỉ có thể gửi yêu cầu cho thiết bị đang được cấp cho mình.");
             }
+            DeviceDTO device = deviceDAO.findById(a.getDeviceId());
+            a.setCategoryId(device != null ? device.getCategoryId() : 0);
         } else {
             a.setDeviceId(0);
+            if (a.getCategoryId() <= 0) return Response.error("Vui lòng chọn danh mục thiết bị cần cấp mới.");
         }
 
         int id = dao.insert(a);

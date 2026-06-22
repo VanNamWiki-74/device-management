@@ -9,6 +9,8 @@ public class ApprovalDTO implements Serializable {
     private int deviceId;
     private String deviceCode;
     private String deviceName;
+    private int categoryId;
+    private String categoryName;
     private int approvalTypeId;
     private String approvalTypeName;
     private String description;
@@ -39,6 +41,12 @@ public class ApprovalDTO implements Serializable {
 
     public String getDeviceName()               { return deviceName; }
     public void setDeviceName(String deviceName){ this.deviceName = deviceName; }
+
+    public int getCategoryId()                  { return categoryId; }
+    public void setCategoryId(int categoryId)   { this.categoryId = categoryId; }
+
+    public String getCategoryName()                 { return categoryName; }
+    public void setCategoryName(String categoryName){ this.categoryName = categoryName; }
 
     public int getApprovalTypeId()                  { return approvalTypeId; }
     public void setApprovalTypeId(int approvalTypeId){ this.approvalTypeId = approvalTypeId; }
