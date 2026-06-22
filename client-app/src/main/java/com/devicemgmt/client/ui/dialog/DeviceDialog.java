@@ -1,5 +1,7 @@
 package com.devicemgmt.client.ui.dialog;
 
+import java.util.List;
+
 import com.devicemgmt.client.service.ClientService;
 import com.devicemgmt.client.ui.Styles;
 import com.devicemgmt.client.ui.UIHelper;
@@ -7,12 +9,21 @@ import com.devicemgmt.common.dto.CategoryDTO;
 import com.devicemgmt.common.dto.DeviceDTO;
 import com.devicemgmt.common.dto.LocationDTO;
 import com.devicemgmt.common.dto.Response;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
-import java.util.List;
+import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class DeviceDialog {
 
@@ -141,7 +152,9 @@ public class DeviceDialog {
                 try { dto.setPurchasePrice(Double.parseDouble(priceStr.replace(",", ""))); }
                 catch (NumberFormatException ex) { errLbl.setText("Giá mua phải là số."); e.consume(); return; }
             }
-            dto.setNotes(notesField.getText().trim());
+            String notes = notesField.getText();
+            dto.setNotes(notes == null ? "" : notes.trim());
+            // dto.setNotes(notesField.getText().trim());
 
             Response resp = existing == null ? svc.createDevice(dto) : svc.updateDevice(dto);
             if (resp.isSuccess()) {

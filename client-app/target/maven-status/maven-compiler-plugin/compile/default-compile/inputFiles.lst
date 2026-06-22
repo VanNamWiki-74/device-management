@@ -1,20 +1,20 @@
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ClientApp.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\config\ClientConfig.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\Launcher.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ServerConnection.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\service\ClientService.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\dialog\ApprovalRequestDialog.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\dialog\AssignmentDialog.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\dialog\DeviceDialog.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\LoginWindow.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\MainWindow.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\ApprovalPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\AssignmentPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\CategoryPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\DashboardPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\DevicePanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\LocationPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\LogPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\panel\UserPanel.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\Styles.java
-D:\device_management_jv-main\client-app\src\main\java\com\devicemgmt\client\ui\UIHelper.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ClientApp.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\config\ClientConfig.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\Launcher.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ServerConnection.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\service\ClientService.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\dialog\ApprovalRequestDialog.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\dialog\AssignmentDialog.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\dialog\DeviceDialog.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\LoginWindow.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\MainWindow.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\ApprovalPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\AssignmentPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\CategoryPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\DashboardPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\DevicePanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\LocationPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\LogPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\panel\UserPanel.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\Styles.java
+F:\Lập trình Java\device-management\client-app\src\main\java\com\devicemgmt\client\ui\UIHelper.java

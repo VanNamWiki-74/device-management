@@ -1,11 +1,11 @@
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\constants\Actions.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\ApprovalDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\ApprovalsDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\AssignmentDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\CategoryDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\DashboardDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\DeviceDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\LocationDTO.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\Request.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\Response.java
-D:\device_management_jv-main\common\src\main\java\com\devicemgmt\common\dto\UserDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\constants\Actions.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\ApprovalDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\ApprovalsDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\AssignmentDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\CategoryDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\DashboardDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\DeviceDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\LocationDTO.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\Request.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\Response.java
+F:\Lập trình Java\device-management\common\src\main\java\com\devicemgmt\common\dto\UserDTO.java
